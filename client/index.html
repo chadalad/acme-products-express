@@ -21,9 +21,11 @@
           products: null,
           inputVal: '',
         };
+
+        this.getInfo = this.getInfo.bind(this);
       }
 
-      componentDidMount() {
+      getInfo() {
         axios.get('http://localhost:3000/api/products')
           .then(res => {
             // console.log(res.data.products);
@@ -35,6 +37,10 @@
             console.log('Failed to set products on state');
             console.error(e);
           });
+      }
+
+      componentDidMount() {
+        this.getInfo();
       }
 
       render() {
@@ -50,7 +56,7 @@
           <React.Fragment>
             <h1> Acme Products </h1>
             <h3> Home </h3>
-            <h3> Products </h3>
+            <h3> Products ({products ? Object.keys(products).length : 0}) </h3>
             {
               products 
               && 
@@ -63,7 +69,11 @@
                       <span>{product}</span>
                       <button
                         onClick={ () => { //  make a delete call using the endpoint
-                          axios.delete(`http://localhost:3000/api/products/${product}`);
+                          axios.delete(`http://localhost:3000/api/products/${product}`)
+                            .then(() => {
+                              //  go back and make products.json an array of objects
+                              this.getInfo();
+                            });
                         }}
                       >
                         Destroy
@@ -89,8 +99,10 @@
 
                     axios.post(`http://localhost:3000/api/products/${this.state.inputVal}`, newProduct)
                       .then(res => {
-                        console.log(res);
-                        console.log(res.data);
+                        this.setState({
+                          inputVal: '',
+                        });
+                        this.getInfo();
                       })
                   }}
                 >

@@ -44,4 +44,10 @@ To Do:
       - Have webpage reload upon update (submitting/deleting product)
       - Stop using CDNs
 
+    Make products a functional component
+    create would a functional component
+    wherever I keep state is where I would need to have the axios get (unless I use component did mount)
+    products component as prop?
+    maybe as d
+
 */
