@@ -56,6 +56,8 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname,'../client/index1.html'));
+  // res.sendFile(path.join(__dirname,'../client/index.html'));
+  // res.sendFile(path.join(__dirname,'../dist/main.js'));
 });
 
 app.get('/api/products', (req, res) => {
